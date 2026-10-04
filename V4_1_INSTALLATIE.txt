@@ -35,3 +35,13 @@ VEILIGHEID
 - .env hoort niet in Git en is niet opgenomen in de geleverde ZIP.
 - Gebruik nooit een Supabase service-role/secret key in de frontend.
 - Screenshotbucket is private en gebruikt per-user policies.
+
+V4.1.1 KALENDERDETAILS
+- Trades in de volledige Kalender-pagina zijn nu aanklikbaar.
+- Een klik opent een read-only detailvenster met tradegegevens, notities en screenshots.
+- Hiervoor is geen extra Supabase-migratie nodig.
+
+V4.1.2 DASHBOARD KALENDERDETAILS
+- Trades in de compacte kalender op het Dashboard zijn nu ook aanklikbaar.
+- Dezelfde read-only trade detailweergave wordt gebruikt als op de volledige Kalender-pagina.
+- Ook hiervoor is geen extra Supabase-migratie nodig.

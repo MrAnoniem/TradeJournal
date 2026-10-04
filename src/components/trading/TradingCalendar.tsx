@@ -6,20 +6,24 @@ import { Icon } from '../icons/Icon'
 function monthStart(date: Date) { return new Date(date.getFullYear(), date.getMonth(), 1) }
 function shiftMonth(date: Date, amount: number) { return new Date(date.getFullYear(), date.getMonth() + amount, 1) }
 
-export function TradingCalendar({ trades, compact=false }: { trades: Trade[]; compact?: boolean }) {
+type DayTrades = { pnl: number; count: number; trades: Trade[] }
+
+export function TradingCalendar({ trades, compact=false, onTradeClick }: { trades: Trade[]; compact?: boolean; onTradeClick?: (trade: Trade) => void }) {
   const [visibleMonth, setVisibleMonth] = useState(() => monthStart(new Date()))
   const year = visibleMonth.getFullYear(), month = visibleMonth.getMonth()
   const today = new Date()
   const byDay = useMemo(() => {
-    const map = new Map<number, { pnl: number; count: number }>()
+    const map = new Map<number, DayTrades>()
     trades.forEach(t => {
       const d = new Date(t.trade_date)
       if (d.getFullYear() !== year || d.getMonth() !== month) return
-      const current = map.get(d.getDate()) ?? { pnl: 0, count: 0 }
+      const current = map.get(d.getDate()) ?? { pnl: 0, count: 0, trades: [] }
       current.pnl += Number(t.pnl)
       current.count += 1
+      current.trades.push(t)
       map.set(d.getDate(), current)
     })
+    map.forEach(value => value.trades.sort((a,b) => new Date(a.trade_date).getTime() - new Date(b.trade_date).getTime()))
     return map
   }, [trades, year, month])
 
@@ -56,7 +60,15 @@ export function TradingCalendar({ trades, compact=false }: { trades: Trade[]; co
       const isToday = isCurrentMonth && today.getDate() === day
       return <div className={`calendar-cell ${value ? 'has-trades' : ''} ${isToday ? 'today' : ''}`} key={day}>
         <span className="calendar-day">{day}</span>
-        {value && <><strong className={value.pnl >= 0 ? 'positive' : 'negative'}>{money(value.pnl)}</strong><small>{value.count} {value.count === 1 ? 'trade' : 'trades'}</small></>}
+        {value && (!onTradeClick ? <>
+          <strong className={value.pnl >= 0 ? 'positive' : 'negative'}>{money(value.pnl)}</strong>
+          <small>{value.count} {value.count === 1 ? 'trade' : 'trades'}</small>
+        </> : <div className="calendar-trades">
+          {value.trades.slice(0, compact ? 2 : 3).map(trade => <button type="button" className="calendar-trade-pill" key={trade.id} onClick={() => onTradeClick(trade)} title={`${trade.instrument} · ${money(Number(trade.pnl))}`}>
+            <span>{trade.instrument}</span><strong className={Number(trade.pnl) >= 0 ? 'positive' : 'negative'}>{money(Number(trade.pnl))}</strong>
+          </button>)}
+          {value.count > (compact ? 2 : 3) && <small className="calendar-more">+ {value.count - (compact ? 2 : 3)} meer</small>}
+        </div>)}
       </div>
     })}</div>
   </div>
