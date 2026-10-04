@@ -1,0 +1,14 @@
+TRADEJOURNAL V4 - INSTALLATIE
+
+1. Bewaar je bestaande .env uit je huidige TradeJournal-v3 map.
+2. Pak deze ZIP uit naar een nieuwe map, bijvoorbeeld TradeJournal-v4.
+3. Kopieer je bestaande .env naar de nieuwe TradeJournal-v4 hoofdmap.
+4. Open Supabase -> SQL Editor -> New query.
+5. Open in dit project: supabase/v4_migration.sql
+6. Kopieer de volledige SQL, plak die in Supabase en klik Run.
+7. Open daarna een terminal in TradeJournal-v4 en voer uit:
+   npm install
+   npm run dev
+8. Log in en open 'Trading Plan' in het menu.
+
+Pas na lokaal testen git add/commit/push uitvoeren.

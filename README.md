@@ -22,3 +22,7 @@ React + TypeScript + Vite + Supabase trade journal.
 P&L en R worden automatisch berekend uit richting, entry, exit, stop loss, positiegrootte en fees. Trades kunnen worden toegevoegd, bewerkt en verwijderd.
 
 Let op: de P&L-formule is `(prijsverschil × positiegrootte) - fees`. Voor instrumenten met contract/pip multipliers vul je bij positiegrootte de effectieve multiplier/quantity in. Een broker-import kan dit later instrument-specifiek maken.
+
+## v4 — Trading Plan
+
+V4 adds a structured Trading Plan with Bias, POI, Entry and Exit rules. Before using it, run `supabase/migrations/004_trading_plan.sql` once in the Supabase SQL Editor.

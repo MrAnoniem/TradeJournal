@@ -1,2 +1,7 @@
-import type { Session } from '@supabase/supabase-js'; import type { View } from '../../types/trade'
-export function Sidebar({session,view,setView,onLogout}:{session:Session;view:View;setView:(v:View)=>void;onLogout:()=>void}){const items:[View,string][]=[['dashboard','Dashboard'],['trades','Trades'],['statistics','Statistieken'],['calendar','Kalender']];return <aside className="sidebar"><div><div className="logo-row"><span className="brand-mark small">TJ</span><strong>Trade Journal</strong></div><nav>{items.map(([k,l])=><button key={k} className={`nav-item ${view===k?'active':''}`} onClick={()=>setView(k)}>{l}</button>)}</nav></div><div className="sidebar-footer"><span className="user-email">{session.user.email}</span><button className="logout-button" onClick={onLogout}>Uitloggen</button></div></aside>}
+import type { Session } from '@supabase/supabase-js'
+import type { View } from '../../types/trade'
+
+export function Sidebar({session,view,setView,onLogout}:{session:Session;view:View;setView:(v:View)=>void;onLogout:()=>void}) {
+  const items:[View,string][]=[['dashboard','Dashboard'],['trades','Trades'],['statistics','Statistieken'],['calendar','Kalender'],['trading-plan','Trading Plan']]
+  return <aside className="sidebar"><div><div className="logo-row"><span className="brand-mark small">TJ</span><strong>Trade Journal</strong></div><nav>{items.map(([k,l])=><button key={k} className={`nav-item ${view===k?'active':''}`} onClick={()=>setView(k)}>{l}</button>)}</nav></div><div className="sidebar-footer"><span className="user-email">{session.user.email}</span><button className="logout-button" onClick={onLogout}>Uitloggen</button></div></aside>
+}

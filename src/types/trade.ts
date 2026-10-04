@@ -1,5 +1,5 @@
 export type Direction = 'Long' | 'Short'
-export type View = 'dashboard' | 'trades' | 'statistics' | 'calendar'
+export type View = 'dashboard' | 'trades' | 'statistics' | 'calendar' | 'trading-plan'
 
 export type Trade = {
   id: string
