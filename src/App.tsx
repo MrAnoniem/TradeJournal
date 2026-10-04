@@ -1,0 +1,16 @@
+import { useEffect,useMemo,useState } from 'react'
+import type { Session } from '@supabase/supabase-js'
+import { supabase } from './lib/supabase'
+import type { Trade,View } from './types/trade'
+import { calculateStats } from './utils/tradeCalculations'
+import { useTrades } from './hooks/useTrades'
+import { AuthPage } from './features/auth/AuthPage'
+import { Sidebar } from './components/layout/Sidebar'
+import { Dashboard } from './features/dashboard/Dashboard'
+import { TradesView } from './features/trades/TradesView'
+import { TradeModal } from './features/trades/TradeModal'
+import { StatisticsView } from './features/statistics/StatisticsView'
+import { CalendarView } from './features/calendar/CalendarView'
+import './styles/app.css'
+
+export default function App(){const[session,setSession]=useState<Session|null>(null),[checking,setChecking]=useState(true),[view,setView]=useState<View>('dashboard'),[modal,setModal]=useState(false),[editing,setEditing]=useState<Trade|null>(null);const{trades,loading,error,reload,deleteTrade}=useTrades(session);const stats=useMemo(()=>calculateStats(trades),[trades]);useEffect(()=>{supabase.auth.getSession().then(({data})=>{setSession(data.session);setChecking(false)});const{data:l}=supabase.auth.onAuthStateChange((_e,s)=>{setSession(s);setChecking(false)});return()=>l.subscription.unsubscribe()},[]);if(checking)return <div className="loading-screen">Trade Journal laden...</div>;if(!session)return <AuthPage/>;const openAdd=()=>{setEditing(null);setModal(true)},openEdit=(t:Trade)=>{setEditing(t);setModal(true)};const title=view==='dashboard'?'Dashboard':view==='trades'?'Trades':view==='statistics'?'Statistieken':'Kalender';return <div className="app-shell"><Sidebar session={session} view={view} setView={setView} onLogout={()=>supabase.auth.signOut()}/><main className="dashboard"><header className="dashboard-header"><div><p className="eyebrow">TRADE JOURNAL</p><h1>{title}</h1><p className="dashboard-subtitle">{view==='dashboard'?'Je trading performance in één overzicht.':view==='trades'?'Bekijk, bewerk en beheer je journal.':view==='statistics'?'Ontdek patronen in je resultaten.':'Bekijk je resultaten per handelsdag.'}</p></div><button className="add-trade-button" onClick={openAdd}>+ Trade toevoegen</button></header>{error&&<div className="error-banner">{error}</div>}{loading?<div className="loading-inline">Trades laden...</div>:<>{view==='dashboard'&&<Dashboard trades={trades} stats={stats} onAdd={openAdd}/>} {view==='trades'&&<TradesView trades={trades} onDelete={deleteTrade} onEdit={openEdit} onAdd={openAdd}/>} {view==='statistics'&&<StatisticsView trades={trades} stats={stats}/>} {view==='calendar'&&<CalendarView trades={trades}/>}</>}</main>{modal&&<TradeModal session={session} trade={editing} onClose={()=>setModal(false)} onSaved={reload}/>}</div>}

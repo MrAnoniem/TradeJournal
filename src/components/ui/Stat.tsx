@@ -1,0 +1,1 @@
+export function Stat({label,value,note,tone}:{label:string;value:string;note:string;tone?:number}){return <article className="stat-card"><span>{label}</span><strong className={tone===undefined?'':tone>0?'positive':tone<0?'negative':''}>{value}</strong><small>{note}</small></article>}
