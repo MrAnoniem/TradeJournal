@@ -1,0 +1,37 @@
+TRADEJOURNAL V4.1 — INSTALLATIE
+================================
+
+Nieuw in v4.1:
+- Kalender kan door alle maanden navigeren.
+- Compacte tradingkalender op het Dashboard.
+- Interactieve Equity Curve met hover-details.
+- Settings-pagina.
+- Dark Mode + Light Mode; keuze wordt lokaal onthouden.
+- Consistente iconen.
+- Drag-and-drop screenshots bij trades (PNG/JPG/JPEG/WEBP, max 5 MB per screenshot, max 5 per trade).
+- Weekreview-pagina met weekstatistieken en opgeslagen reflectienotities.
+
+BELANGRIJK — SUPABASE
+1. Open Supabase > SQL Editor > New query.
+2. Open in dit project: supabase/v4_1_migration.sql
+3. Kopieer de volledige inhoud naar Supabase.
+4. Klik Run.
+5. Verwacht: Success. No rows returned.
+
+Deze migratie maakt:
+- public.trade_screenshots
+- public.weekly_reviews
+- private Storage bucket: trade-screenshots
+- RLS/Storage policies zodat gebruikers alleen hun eigen screenshots/reviews kunnen benaderen.
+
+LOKAAL TESTEN
+1. Zorg dat je bestaande .env in de projectroot staat.
+2. npm install
+3. npm run dev
+4. Test Light/Dark mode, kalendernavigatie, equity hover, screenshot upload en Weekreview.
+5. npm run build
+
+VEILIGHEID
+- .env hoort niet in Git en is niet opgenomen in de geleverde ZIP.
+- Gebruik nooit een Supabase service-role/secret key in de frontend.
+- Screenshotbucket is private en gebruikt per-user policies.
