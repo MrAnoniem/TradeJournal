@@ -1,0 +1,27 @@
+TRADEJOURNAL V4.2
+
+Nieuw in deze versie:
+- Nieuwe performance Trading Calendar in de stijl van een professionele trading journal kalender.
+- Groene winst-dagen, rode verlies-dagen en neutrale dagen zonder trades.
+- Navigeren door maanden en jaren.
+- Snel terug naar de huidige maand.
+- Weergave kiezen: Winst/Verlies (€), R-multiple of aantal trades.
+- Maandstatistieken: gemiddelde dagelijkse P&L, totale maand P&L, gemiddelde winnaar en gemiddelde verliezer.
+- Bij meerdere trades op één dag opent eerst een dagoverzicht; daarna kun je de gewenste trade openen.
+- Trade Details zijn vanuit Dashboard en Kalender direct te bewerken.
+- Recente trades op het Dashboard zijn aanklikbaar en openen Trade Details.
+
+DATABASE
+Voor deze v4.2-update is GEEN nieuwe Supabase SQL-migratie nodig.
+De bestaande v4/v4.1 database en Storage-configuratie blijven gebruikt worden.
+
+LOKAAL TESTEN
+1. Zet je bestaande .env in de projectroot.
+2. Voer uit: npm install
+3. Voer uit: npm run dev
+4. Test Kalender en Dashboard.
+5. Open een trade via Trade Details en klik op 'Trade bewerken'.
+6. Test: npm run build
+
+GITHUB
+Push pas naar GitHub nadat de lokale tests en npm run build succesvol zijn.

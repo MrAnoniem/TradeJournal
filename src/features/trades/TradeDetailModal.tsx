@@ -7,7 +7,7 @@ import { Icon } from '../../components/icons/Icon'
 
 const number = (value:number|null) => value === null ? '—' : String(value)
 
-export function TradeDetailModal({trade,onClose}:{trade:Trade;onClose:()=>void}){
+export function TradeDetailModal({trade,onClose,onEdit}:{trade:Trade;onClose:()=>void;onEdit?:(trade:Trade)=>void}){
   const [screenshots,setScreenshots]=useState<TradeScreenshot[]>([])
   const [loadingScreenshots,setLoadingScreenshots]=useState(true)
 
@@ -57,7 +57,10 @@ export function TradeDetailModal({trade,onClose}:{trade:Trade;onClose:()=>void})
         {loadingScreenshots ? <div className="trade-detail-empty">Screenshots laden...</div> : screenshots.length ? <div className="screenshot-grid trade-detail-screenshots">{screenshots.map(item=><a className="screenshot-thumb" key={item.id} href={item.url} target="_blank" rel="noreferrer" title="Open screenshot groot">{item.url?<img src={item.url} alt={item.file_name}/>:<div className="image-placeholder"><Icon name="image"/></div>}<div className="screenshot-meta"><span>{item.file_name}</span><Icon name="chevron-right" size={14}/></div></a>)}</div> : <div className="trade-detail-empty">Geen screenshots toegevoegd.</div>}
       </div>
 
-      <div className="modal-actions"><button type="button" className="cancel-button" onClick={onClose}>Sluiten</button></div>
+      <div className="modal-actions">
+        <button type="button" className="cancel-button" onClick={onClose}>Sluiten</button>
+        {onEdit&&<button type="button" className="add-trade-button" onClick={()=>onEdit(trade)}><Icon name="edit" size={16}/>Trade bewerken</button>}
+      </div>
     </section>
   </div>
 }

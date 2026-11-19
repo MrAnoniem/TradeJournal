@@ -26,3 +26,11 @@ Let op: de P&L-formule is `(prijsverschil × positiegrootte) - fees`. Voor instr
 ## v4 — Trading Plan
 
 V4 adds a structured Trading Plan with Bias, POI, Entry and Exit rules. Before using it, run `supabase/migrations/004_trading_plan.sql` once in the Supabase SQL Editor.
+
+## v4.2
+
+- Performance Trading Calendar met winst/verlieskleuren, maand- en jaarnavigatie en maandstatistieken.
+- Kalenderweergave wisselen tussen P&L, R-multiple en aantal trades.
+- Dagen met meerdere trades openen eerst een dagoverzicht.
+- Trade Details vanuit Dashboard en Kalender kunnen direct door naar Trade bewerken.
+- Recente trades op het Dashboard zijn aanklikbaar.
